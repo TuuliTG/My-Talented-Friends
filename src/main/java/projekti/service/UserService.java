@@ -35,7 +35,6 @@ public class UserService {
     }
     
     public Boolean createANewUser(String firstname, String lastname, String username,String password) {
-        System.out.println("user found " + this.userRepo.findByUsername(username));
         if(userRepo.findByUsername(username)==null){
             User u = new User(firstname, lastname, username,this.passwordEncoder.encode(password));
             this.userRepo.save(u);
@@ -51,9 +50,17 @@ public class UserService {
         User u = this.userRepo.findByUsername(username);
         User f = this.userRepo.findByUsername(friendUsername);
         
-        
-        u.getFriends().add(f);
-        u.getFriendOf().add(f);
+        Long id = u.getId();
+        boolean areFriends = false;
+        if(u.getFriends().contains(f)){
+            areFriends=true;
+            System.out.println("already friends");
+            
+        }
+        if(areFriends == false) {
+            u.getFriends().add(f);
+            u.getFriendOf().add(f);
+        }
     }
     
     
