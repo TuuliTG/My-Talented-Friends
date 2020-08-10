@@ -33,8 +33,9 @@ public class FileObject extends AbstractPersistable<Long>{
     @ManyToOne
     private User user;
     
-    
+    /*
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
+*/
 }
