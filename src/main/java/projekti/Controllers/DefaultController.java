@@ -12,4 +12,9 @@ public class DefaultController {
         model.addAttribute("message", "World!");
         return "index";
     }
+    
+    @GetMapping("/perform_logout")
+    public String redirect() {
+        return "/etusivu";
+    }
 }
