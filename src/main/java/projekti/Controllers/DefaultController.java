@@ -14,7 +14,7 @@ public class DefaultController {
     }
     
     @GetMapping("/perform_logout")
-    public String redirect() {
-        return "/etusivu";
+    public String logout() {
+        return "logout";
     }
 }
