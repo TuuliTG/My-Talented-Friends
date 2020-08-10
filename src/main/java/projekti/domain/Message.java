@@ -32,7 +32,7 @@ public class Message extends AbstractPersistable<Long> {
     private String content;
     //private LocalTime writtenAtTime;
     //private LocalDate writtenAtDate;
-    @Column(name="timestamp") //this is for h2 -> change for postgresql???
+    //@Column(name="timestamp") //this is for h2 -> change for postgresql???
     private LocalDateTime writtenAt;
 
 }
