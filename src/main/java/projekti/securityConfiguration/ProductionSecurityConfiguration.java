@@ -45,9 +45,13 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .defaultSuccessUrl("/userHomePage", true)
                 .failureUrl("/login?error=true")
                 .and()
-                .logout().permitAll()
+                .logout()
+                .clearAuthentication(true)
                 .logoutUrl("/perform_logout")
-                .logoutSuccessUrl("/etusivu");
+                .logoutSuccessUrl("/etusivu")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true) 
+                ;
                 
     }
 
