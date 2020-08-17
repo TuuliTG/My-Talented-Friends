@@ -42,9 +42,12 @@ public class HomePageController {
         return "redirect:/userHomePage/" + username;
     }
     
+    
+    
     @GetMapping("/userHomePage/{username}")
     public String getUserHomePage(@PathVariable String username, Model model){
         boolean isAVisitor = false;
+        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUsername = auth.getName();
         if(!loggedInUsername.equals(username)) {
@@ -65,23 +68,15 @@ public class HomePageController {
         //}
         //System.out.println("friends = " + friends);
         model.addAttribute("friends", friends);
-        List<Message> messages = this.messageService.listAllOwnedBy(username);
-        model.addAttribute("messages", messages);
         
         return "userHomePage";
     }
     
     @PostMapping("/usernameNotAvailable")
     public String goBack() {
-        return "redirect:/etusivu";
+        return "redirect:/frontpage";
     }
     
     
-    @PostMapping("/userHomePage/{username}/addFriend")
-    public String assignAFriend(@PathVariable String username, @RequestParam String friendUsername){
-        
-        this.userService.addAFriend(username, friendUsername);
-        
-        return "redirect:/userHomePage/" + username;
-    }
+   
 }

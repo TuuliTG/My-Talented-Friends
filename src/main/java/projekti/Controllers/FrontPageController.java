@@ -24,7 +24,11 @@ public class FrontPageController {
     @Autowired
     private UserService userService;
     
-    @GetMapping("/etusivu")
+    @GetMapping("*")
+    public String frontpage() {
+        return "/etusivu";
+    }
+    @GetMapping("/frontpage")
     public String showUsers(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
@@ -47,7 +51,7 @@ public class FrontPageController {
         }
         
         
-        return "etusivu";
+        return "frontpage";
     }
     
     

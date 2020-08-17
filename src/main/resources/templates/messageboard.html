@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>MESSAGE BOARD</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>MESSAGE BOARD</h1>
+        
+        <form method="POST" th:action="@{/messageboard/post}">
+            <textarea name="content" rows="5" placeholder="write your message here"></textarea>
+            
+            <input type="submit" value="Add!"/>
+        </form>
+        
+        <ul>
+            <li th:each="message : ${messages}">
+                <span th:text="${#temporals.format(message.writtenAt, 'dd-mm-yy HH:mm')}"></span>
+                <br/>
+                <span th:text="${message.writer.username}"></span>:
+                <br/>
+                <span th:text="${message.content}"></span>
+                <br/>
+                Likes: <span th:text="${message.likes}"></span>
+                <br/>
+                <form th:action="@{/messageboard/{messageid}(messageid=${message.id})}" th:method="POST">
+                    <input type="submit" value="Like"/>
+                </form>
+            </li>
+        </ul>
+    </body>
+</html>

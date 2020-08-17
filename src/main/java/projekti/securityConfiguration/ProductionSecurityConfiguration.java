@@ -36,7 +36,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         
 
         http.authorizeRequests()
-                .antMatchers("/etusivu").permitAll()
+                .antMatchers("/frontpage").permitAll()
                 .antMatchers("/signup").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
@@ -48,7 +48,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .logout()
                 .clearAuthentication(true)
                 .logoutUrl("/perform_logout")
-                .logoutSuccessUrl("/etusivu")
+                .logoutSuccessUrl("/frontpage")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true) 
                 ;

@@ -8,71 +8,88 @@ and open the template in the editor.
     <head>
         <title>USER WALL </title>
     </head>
+    
     <body>
         <div th:if="${isAVisitor}">
             <h1 th:text="${user.firstName + ' ' + user.lastName}">Home Page title</h1>
+            
         </div>
         
         
         
         <div th:unless="${isAVisitor}">
-            <h1>HELLO</h1>
-        <h1 th:text="${user.firstName + ' ' + user.lastName}"></h1>
-        <!--<div>
-            <img th:src="@{/userHomePage/{username}}"/>
-        </div>
-        -->
-        <h2>Who do you want to be friends with?</h2>
-        <form th:action="@{/userHomePage/{username}/addFriend(username=${user.username})}" method="POST">
-            <select name="friendUsername">
-                <option th:each="friend : ${allUsers}" th:value="${friend.username}" th:text="${friend.username}"></option>
-                
-            </select>
-            <input type="submit" value="submit" />
-        </form>
-        <div th:if="${friends != null}">
-            <h3>My friends</h3>
+            <h1>Welcome <span th:text="${user.firstName + ' ' + user.lastName}">name</span></h1>
+           
+            <!--<div>
+                <img th:src="@{/userHomePage/{username}}"/>
+            </div>
+            -->
+            <strong>Who do you want to be friends with?</strong>
+            <form th:action="@{/userHomePage/{username}/sendAFriendRequest(username=${user.username})}" method="POST">
+                <select name="friendUsername">
+                    <option th:each="friend : ${allUsers}" th:value="${friend.username}" th:text="${friend.username}"></option>
+
+                </select>
+                <input type="submit" value="submit" />
+            </form>
+            Pending friend requests:
+            <br/>
             <ul>
-                <li th:each="friend : ${friends}" >
-                    <a th:href="@{/userHomePage/{friend}(friend =${friend.username})}"><span th:text="${friend.username}">friend name</span> </a>
+                <li th:each="request : ${user.sentRequests}">
+                    <span th:text="${request.requestTo.username}"></span>
                 </li>
             </ul>
+            <br/>
+            <div>
+                <strong>Friend requests:</strong>
+                <br/>
+                <ul>
+                    <li th:each="request : ${user.comingRequests}">
+                        <a th:href="@{/userHomePage/{username}(username=${request.requestFrom.username})}" th:text="${request.requestFrom.username}">request from</a>
+                        <form th:action="@{/accept/{username}(username=${request.requestFrom.username})}" method="POST">
+                            <input type="submit" value="accept"/>
+                        </form>
+                        <form th:action="@{/reject/{username}(username=${request.requestFrom.username})}" method="POST">
+                            <input type="submit" value="reject"/>
+                        </form>
+                    </li>
+                    
+                </ul>
+                
+
+            </div>
+
+            <div th:if="${friends != null}">
+                <h3>My friends</h3>
+                <ul>
+                    <li th:each="friend : ${friends}" >
+                        <a th:href="@{/userHomePage/{friend}(friend =${friend.username})}"><span th:text="${friend.username}">friend name</span> </a>
+                        
+
+                    </li>
+                </ul>
+            </div>
+            <div th:unless="${friends != null}">
+                <h3>NO FRIENDS YET</h3>
+            </div>
+
+
+            <!-- PICTURES
+            <form th:action="@{/userHomePage/{username}/files(username=${user.username})}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <input type="submit" value="accept" />
+            </form>
+            -->
+        
         </div>
-        <div th:unless="${friends != null}">
-            <h3>NO FRIENDS YET</h3>
-        </div>
         
-        
-        
-        <form th:action="@{/userHomePage/{username}/files(username=${user.username})}" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <input type="submit" value="accept" />
-        </form>
-        
-        
-        </div>
-        <form method="POST" th:action="@{/userHomePage/{username}/messages(username=${user.username})}">
-            <textarea name="content" rows="5" placeholder="write your message here"></textarea>
-            
-            <input type="submit" value="Add!"/>
-        </form>
-        <ol>
-            <li th:each="message : ${messages}">
-                <span th:text="${message.writer.username}">writer</span>
-                wrote on <span th:text="${#temporals.format(message.writtenAt, 'dd-MM-yyyy HH:mm')}"></span>
-                <br/>
-                <br/>
-                <span th:text="${message.content}">content</span>
-                <br/>
-                <br/>
-            </li>
-        </ol>
-        
-        <form method="GET" action="/etusivu">
+        <form method="GET" action="/frontpage">
             <button type="submit">BACK TO THE FRONT PAGE</button>
         </form>
         
         <a th:href="@{/perform_logout}">log out</a>
+        <br/>
+        <a th:if="${isAVisitor}" th:href="@{/userHomePage}">Go to your homepage</a>
             
     </body>
 </html>

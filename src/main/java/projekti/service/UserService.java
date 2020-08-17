@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import projekti.domain.FriendRequest;
 import projekti.domain.User;
+import projekti.repositories.FriendRequestRepository;
 import projekti.repositories.UserRepository;
 
 /**
@@ -25,6 +27,9 @@ public class UserService {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private FriendRequestRepository frp;
     
     public List<User> listAll() {
         return userRepo.findAll();
@@ -45,22 +50,48 @@ public class UserService {
      
     }
     
-    @Transactional
-    public void addAFriend(String username, String friendUsername){
-        User u = this.userRepo.findByUsername(username);
-        User f = this.userRepo.findByUsername(friendUsername);
+    public void sendAFriendRequest(String usernameFrom, String usernameTo) {
+        User u = this.userRepo.findByUsername(usernameFrom);
+        User f = this.userRepo.findByUsername(usernameTo);
         
-        Long id = u.getId();
+        boolean areFriends = this.areFriends(u, f);
+        
+        if(areFriends == false) {
+            FriendRequest r = new FriendRequest(u, f);
+            this.frp.save(r);
+        }
+        
+    }
+    
+    @Transactional
+    public void acceptARequest(String usernameFrom, String usernameTo){
+        User u = this.userRepo.findByUsername(usernameFrom);
+        User f = this.userRepo.findByUsername(usernameTo);
+        
+        boolean areFriends = this.areFriends(u, f);
+        
+        if(areFriends == false) {
+            u.getFriends().add(f);
+            u.getFriendOf().add(f);
+        }
+        System.out.println("accept a request from id " + u.getId());
+        this.frp.deleteByRequestFromAndRequestTo(u.getId(), f.getId());
+    }
+    
+    public void reject(String usernameFrom, String usernameTo){
+        User u = this.userRepo.findByUsername(usernameFrom);
+        User f = this.userRepo.findByUsername(usernameTo);
+        this.frp.deleteByRequestFromAndRequestTo(u.getId(), f.getId());
+    }
+    
+    private boolean areFriends(User u, User f) {
         boolean areFriends = false;
         if(u.getFriends().contains(f)){
             areFriends=true;
             System.out.println("already friends");
             
         }
-        if(areFriends == false) {
-            u.getFriends().add(f);
-            u.getFriendOf().add(f);
-        }
+        return areFriends;
     }
     
     

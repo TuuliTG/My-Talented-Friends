@@ -46,7 +46,7 @@ public class signUpController {
         
         Boolean userCreated = this.userService.createANewUser(firstName, lastName, username, password);
         if(userCreated == true){
-            return "redirect:/etusivu";
+            return "redirect:/frontpage";
         }
         else {
             return "usernameNotAvailable";

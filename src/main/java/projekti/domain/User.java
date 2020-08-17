@@ -46,6 +46,8 @@ public class User extends AbstractPersistable<Long> {
         this.password = password;
     }
     
+    @ManyToMany
+    List<Message> likedMessages;
     
     @ManyToMany
     @JoinTable(name="tbl_friends", 
@@ -62,8 +64,12 @@ public class User extends AbstractPersistable<Long> {
     
     @OneToMany(mappedBy="writer")
     private List<Message> messagesWritten;
-    @OneToMany(mappedBy="owner")
-    private List<Message> messagesOwned;
+   
+    
+    @OneToMany(mappedBy="requestTo")
+    private List<FriendRequest> comingRequests;
+    @OneToMany(mappedBy="requestFrom")
+    private List<FriendRequest> sentRequests;
     
     
    
