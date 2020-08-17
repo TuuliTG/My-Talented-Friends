@@ -37,7 +37,7 @@ public class Message extends AbstractPersistable<Long> {
     @ManyToMany
     private List<User> usersWhoLiked;
     
-    @Column(name="timestamp") //this is for h2 -> change for postgresql???
+    //@Column(name="timestamp") //this is for h2 -> change for postgresql???
     private LocalDateTime writtenAt;
     
     /*
