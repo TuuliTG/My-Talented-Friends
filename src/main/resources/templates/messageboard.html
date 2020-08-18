@@ -29,10 +29,36 @@ and open the template in the editor.
                 <br/>
                 Likes: <span th:text="${message.likes}"></span>
                 <br/>
-                <form th:action="@{/messageboard/{messageid}(messageid=${message.id})}" th:method="POST">
+                <form th:action="@{/messageboard/like/{messageid}(messageid=${message.id})}" th:method="POST">
                     <input type="submit" value="Like"/>
                 </form>
+                <ul>
+                    <li th:each="comment : ${message.comments}">
+                        <span th:text="${#temporals.format(comment.writtenAt, 'dd-mm-yy HH:mm')}"></span>
+                        <br/>
+                        <span th:text="${comment.writer.username}"></span>:
+                        <br/>
+                        <span th:text="${comment.content}"></span>
+                        <br/>
+                        Likes: <span th:text="${comment.likes}"></span>
+                        <br/>
+                        <form th:action="@{/messageboard/likecomment/{commentid}(commentid=${comment.id})}" th:method="POST">
+                            <input type="submit" value="Like"/>
+                        </form>
+                    </li>
+                </ul>
+                <form method="POST" th:action="@{/messageboard/comment/{messageid}(messageid=${message.id})}">
+                    <textarea name="content" rows="5" placeholder="Comment"></textarea>
+            
+                    <input type="submit" value="send"/>
+                    </form>
+                
             </li>
         </ul>
+        
+        <form method="GET" action="/frontpage">
+            <button type="submit">BACK TO THE FRONT PAGE</button>
+        </form>
+        <a th:href="@{/userHomePage}">Go to your homepage</a>
     </body>
 </html>

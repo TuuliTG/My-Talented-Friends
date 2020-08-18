@@ -74,13 +74,22 @@ public class MessagesController {
         model.addAttribute("messages", this.messageService.listAllOwnedByFriendsAndUser(username));
         return "messageboard";
     }
-    @PostMapping("/messageboard/{messageid}")
-    public String like(@PathVariable String messageid){
+    @PostMapping("/messageboard/like/{messageid}")
+    public String likeMessage(@PathVariable String messageid){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         this.messageService.like(parseLong(messageid), username);
         return "redirect:/messageboard";
     }
+    
+    @PostMapping("/messageboard/likecomment/{commentid}")
+    public String likeComment(@PathVariable String commentid){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        this.messageService.likeComment(parseLong(commentid), username);
+        return "redirect:/messageboard";
+    }
+    
     @PostMapping("/messageboard/post")
     public String post(@RequestParam String content){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -92,4 +101,17 @@ public class MessagesController {
         return "redirect:/messageboard";
         
     }
+    
+    @PostMapping("/messageboard/comment/{messageid}")
+    public String comment(@PathVariable String messageid, @RequestParam String content){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String writerUsername = auth.getName();
+        LocalDateTime writtenAt = LocalDateTime.now();
+        writtenAt.format(DateTimeFormatter.ISO_DATE);
+        
+        this.messageService.comment(parseLong(messageid), writerUsername, content, writtenAt);
+        return "redirect:/messageboard";
+    }
+    
+    
 }

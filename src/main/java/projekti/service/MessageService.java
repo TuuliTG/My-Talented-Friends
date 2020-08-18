@@ -17,8 +17,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import projekti.domain.Comment;
 import projekti.domain.Message;
 import projekti.domain.User;
+import projekti.repositories.CommentRepository;
 import projekti.repositories.MessageRepository;
 import projekti.repositories.UserRepository;
 
@@ -33,6 +36,8 @@ public class MessageService {
     private UserRepository userRepository;
     @Autowired 
     private MessageRepository messageRepository;
+    @Autowired
+    private CommentRepository commentRepository;
     
     
     public void saveMessage(String content, String writerUsername, LocalDateTime writtenAt){
@@ -95,8 +100,44 @@ public class MessageService {
         messageRepository.save(m);
     }
     
-    
-    
+    @Transactional
+    public void comment(Long messageId, String writerUsername, String content, LocalDateTime writtenAt) {
+        Message m = this.messageRepository.getOne(messageId);
+        User writer = this.userRepository.findByUsername(writerUsername);
+        if (content != null && !content.trim().isEmpty()) {
+            Comment comment = new Comment();
+            comment.setContent(content.trim());
+
+            comment.setWriter(userRepository.findByUsername(writerUsername));
+            comment.setWrittenAt(writtenAt);
+            comment.setMessage(m);
+            this.commentRepository.save(comment);
+            m.getComments().add(comment);
+            this.messageRepository.save(m);
+            
+            
+        }
+    }
+    public void likeComment(Long commentId, String user) {
+        Comment c = this.commentRepository.getOne(commentId);
+        User u = this.userRepository.findByUsername(user);
+        boolean liked = false;
+        if(c.getLikes()> 0) {
+            List<User> users = c.getUsersWhoLiked();
+            for(User liker : users) {
+                if (liker.getId().equals(u.getId())) {
+                    System.out.println("already liked");
+                    liked= true;
+                }                    
+            }
+        }
+        if (liked == false){
+            
+            c.getUsersWhoLiked().add(u);
+            c.setLikes(c.getLikes()+ 1);
+        }
+        commentRepository.save(c);
+    }
     
     
 }
