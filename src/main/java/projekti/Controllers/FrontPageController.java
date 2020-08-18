@@ -26,7 +26,7 @@ public class FrontPageController {
     
     @GetMapping("*")
     public String frontpage() {
-        return "/etusivu";
+        return "/frontpage";
     }
     @GetMapping("/frontpage")
     public String showUsers(Model model) {
