@@ -8,6 +8,7 @@ package projekti.Controllers;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,7 @@ public class ImageController {
         
         return fo.getContent();
     }
-
+    @Transactional
     @PostMapping("/userHomePage/{username}/files")
     public String saveImage(@PathVariable String username, @RequestParam("file") MultipartFile file) throws IOException {
         User u = userService.findByUsername(username);
@@ -51,9 +52,9 @@ public class ImageController {
 
         fo.setContent(file.getBytes());
         fo.setUser(u);
-        fileObjectRepository.save(fo);
+        //fileObjectRepository.save(fo);
         u.setProfilePicture(fo);
-        this.userService.save(u);
+        //this.userService.save(u);
 
 
         return "redirect:/userHomePage/" + username; 
