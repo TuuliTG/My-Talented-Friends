@@ -29,13 +29,13 @@ public class FileObject extends AbstractPersistable<Long>{
     
     private String name;
     private String mediaType;
-    private Long size;
+    private Long fileSize;
     @ManyToOne
     private User user;
     
-    /*
+    
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
-*/
+
 }

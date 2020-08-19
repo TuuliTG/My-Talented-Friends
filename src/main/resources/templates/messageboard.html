@@ -11,6 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <div th:replace="fragments/links :: header"></div>
         <h1>MESSAGE BOARD</h1>
         
         <form method="POST" th:action="@{/messageboard/post}">
@@ -56,9 +57,5 @@ and open the template in the editor.
             </li>
         </ul>
         
-        <form method="GET" action="/frontpage">
-            <button type="submit">BACK TO THE FRONT PAGE</button>
-        </form>
-        <a th:href="@{/userHomePage}">Go to your homepage</a>
     </body>
 </html>

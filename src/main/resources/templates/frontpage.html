@@ -10,6 +10,7 @@ and open the template in the editor.
         
     </head>
     <body>
+        <div th:replace="fragments/links :: header"></div>
         <h1>Welcome</h1>
         <br/>
         <a th:href="@{/signup}">Sign up</a>

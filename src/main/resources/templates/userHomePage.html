@@ -10,6 +10,7 @@ and open the template in the editor.
     </head>
     
     <body>
+        <div th:replace="fragments/links :: header"></div>
         <div th:if="${isAVisitor}">
             <h1 th:text="${user.firstName + ' ' + user.lastName}">Home Page title</h1>
             
@@ -20,10 +21,10 @@ and open the template in the editor.
         <div th:unless="${isAVisitor}">
             <h1>Welcome <span th:text="${user.firstName + ' ' + user.lastName}">name</span></h1>
            
-            <!--<div>
-                <img th:src="@{/userHomePage/{username}}"/>
+            <div>
+                <img th:src="@{/image/{username}(username=${user.username})}"/>
             </div>
-            -->
+            
             <strong>Who do you want to be friends with?</strong>
             <form th:action="@{/userHomePage/{username}/sendAFriendRequest(username=${user.username})}" method="POST">
                 <select name="friendUsername">
@@ -74,26 +75,21 @@ and open the template in the editor.
             </div>
 
 
-            <!-- PICTURES
+            ADD A PROFILE PICTURE
             <form th:action="@{/userHomePage/{username}/files(username=${user.username})}" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file" />
                 <input type="submit" value="accept" />
             </form>
-            -->
+            
         
-        </div>
+        </div> <!-- Only for own userpage ends here -->
         
-        <form method="GET" action="/frontpage">
-            <button type="submit">BACK TO THE FRONT PAGE</button>
-        </form>
-        <form method="GET" action="/messageboard">
-            <button type="submit">MESSAGE BOARD</button>
-        </form>
-        
-        
-        <a th:href="@{/perform_logout}">log out</a>
         <br/>
-        <a th:if="${isAVisitor}" th:href="@{/userHomePage}">Go to your homepage</a>
+        <div th:if="${isAVisitor}">
+            <div th:replace="fragments/links :: homepagebutton">Go to your homepage</div>
+        </div>
+             
+        
             
     </body>
 </html>

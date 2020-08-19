@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -71,10 +72,7 @@ public class User extends AbstractPersistable<Long> {
     @OneToMany(mappedBy="requestFrom")
     private List<FriendRequest> sentRequests;
     
-    
-   
-   /*
-   @OneToMany
-    private List<FileObject> profilePictures;
-*/
+    @OneToOne
+    private FileObject profilePicture;
+
 }

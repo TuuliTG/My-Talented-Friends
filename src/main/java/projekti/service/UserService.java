@@ -94,5 +94,9 @@ public class UserService {
         return areFriends;
     }
     
+    public void save(User u) {
+        this.userRepo.save(u);
+    }
+    
     
 }

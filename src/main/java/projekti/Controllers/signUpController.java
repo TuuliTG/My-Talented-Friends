@@ -60,25 +60,7 @@ public class signUpController {
         return "signup";
     }
     /*
-    @PostMapping("/userHomePage/{username}/files")
-    public String saveImage(@PathVariable("username") String username, @RequestParam("file") MultipartFile file) throws IOException {
-        System.out.println("username " + username);
-        User u = userRepo.findByUsername(username);
-        System.out.println("saving fileobject to user " + u.getUsername());
-        FileObject fo = new FileObject();
-        
-        fo.setName(file.getOriginalFilename());
-        fo.setMediaType(file.getContentType());
-        fo.setSize(file.getSize());
-        
-        Long id = fo.getId();
-        fo.setContent(file.getBytes());
-        fo.setUser(u);
-        fileObjectRepo.save(fo);
-        
-        
-        return "redirect:/userHomePage/"; //mikä osoite?
-    }
+    
     
     @GetMapping(path="/userHomePage/{username}", produces = "image/jpg")
     @ResponseBody
