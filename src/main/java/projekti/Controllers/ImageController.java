@@ -32,6 +32,7 @@ public class ImageController {
     @Autowired
     private FileObjectRepository fileObjectRepository;
     
+    @Transactional
     @GetMapping(path="/image/{username}",produces = "image/*")
     @ResponseBody
     public byte[] getContent(@PathVariable String username) {
