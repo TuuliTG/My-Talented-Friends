@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -35,6 +36,7 @@ public class FileObject extends AbstractPersistable<Long>{
     
     
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     //@Basic(fetch = FetchType.LAZY)
     private byte[] content;
 
