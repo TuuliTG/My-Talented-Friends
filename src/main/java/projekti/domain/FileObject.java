@@ -35,7 +35,7 @@ public class FileObject extends AbstractPersistable<Long>{
     
     
     @Lob
-    @Basic(fetch = FetchType.LAZY)
+    //@Basic(fetch = FetchType.LAZY)
     private byte[] content;
 
 }
