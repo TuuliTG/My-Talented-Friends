@@ -52,9 +52,9 @@ public class ImageController {
 
         fo.setContent(file.getBytes());
         fo.setUser(u);
-        //fileObjectRepository.save(fo);
+        fileObjectRepository.save(fo);
         u.setProfilePicture(fo);
-        //this.userService.save(u);
+        this.userService.save(u);
 
 
         return "redirect:/userHomePage/" + username; 

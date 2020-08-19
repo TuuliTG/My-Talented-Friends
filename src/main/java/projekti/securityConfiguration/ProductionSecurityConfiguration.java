@@ -47,7 +47,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         
         
                 http.logout()
-                .logoutUrl("/logout")
+                .logoutUrl("/perform_logout").permitAll()
                 .logoutSuccessUrl("/frontpage")
                 .deleteCookies("JSESSIONID")
                 .clearAuthentication(true)
