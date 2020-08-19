@@ -36,8 +36,8 @@ public class FileObject extends AbstractPersistable<Long>{
     
     
     @Lob
-    @Type(type = "org.hibernate.type.ImageType")
-    //@Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] content;
 
 }
