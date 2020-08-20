@@ -11,12 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <header th:fragment="header">
-            <a th:href="@{/frontpage}">Front Page</a> |
-            <a th:href="@{/userHomePage}">Homepage</a> |
-            <a th:href="@{/messageboard}">Message Board</a> |
-            <a href="/perform_logout">Log out</a>
-        </header>
+        
         <div th:fragment="homepagelink">
             <a th:href="@{/userHomePage}">Go to your homepage</a>
         </div>  

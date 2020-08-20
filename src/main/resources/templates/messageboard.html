@@ -5,13 +5,12 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="fragments/headers :: head(title='Messageboard')">
         <title>MESSAGE BOARD</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
     </head>
     <body>
-        <div th:replace="fragments/links :: header"></div>
+        <div th:replace="fragments/headers :: header"></div>
         <h1>MESSAGE BOARD</h1>
         
         <form method="POST" th:action="@{/messageboard/post}">

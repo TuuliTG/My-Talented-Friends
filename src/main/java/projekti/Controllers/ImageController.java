@@ -44,7 +44,12 @@ public class ImageController {
     @Transactional
     @PostMapping("/userHomePage/{username}/files")
     public String saveImage(@PathVariable String username, @RequestParam("file") MultipartFile file) throws IOException {
+        if(file.getSize()>1000000){
+            System.out.println("file is too large");
+            return "redirect:/filetoolarge";
+        }
         User u = userService.findByUsername(username);
+        
         FileObject fo = new FileObject();
 
         fo.setName(file.getOriginalFilename());
