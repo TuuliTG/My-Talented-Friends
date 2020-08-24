@@ -44,8 +44,10 @@ public class User extends AbstractPersistable<Long> {
     @Size(max = 10)
     public String username;
     @NotEmpty
-    
     public String password;
+    
+    @Size(max = 200)
+    private String description;
     
     @OneToMany(mappedBy="owner")
     private List<Skill> skills;

@@ -56,6 +56,7 @@ public class skillController {
         Long skillId = Long.parseLong(skillid);
         Skill skill = this.skillRepository.getOne(skillId);
         skill.setLikes(skill.getLikes()+1);
+        this.skillRepository.save(skill);
         return "redirect:/userHomePage/" + username;
     }
 }

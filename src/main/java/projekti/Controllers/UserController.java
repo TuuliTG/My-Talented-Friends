@@ -36,6 +36,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         User user = this.userService.findByUsername(username);
+        
         List<User> friends = user.getFriends();
         List<Long> sentRequests = this.userService.sentFriendRequestsTo(user.getId());
         
@@ -50,5 +51,17 @@ public class UserController {
         model.addAttribute("friends", friends);
         model.addAttribute("sentrequests", sentRequests);
         return "users";
+    }
+    @PostMapping("/description")
+    public String addADescription(@RequestParam String description){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        this.userService.addADescription(description, username);
+        return "redirect:/userHomePage/" + username;
+    }
+    
+    @GetMapping("/description")
+    public String description(){
+        return "description";
     }
 }

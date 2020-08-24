@@ -7,6 +7,8 @@ package projekti.Controllers;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,9 +44,11 @@ public class ImageController {
         return fo.getContent();
     }
     @Transactional
-    @PostMapping("/userHomePage/{username}/files")
-    public String saveImage(@PathVariable String username, @RequestParam("file") MultipartFile file) throws IOException {
-        if(file.getSize()>1000000){
+    @PostMapping("/image")
+    public String saveImage(@RequestParam("file") MultipartFile file) throws IOException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        if(file.getSize()>100000){
             System.out.println("file is too large");
             return "redirect:/filetoolarge";
         }
@@ -64,5 +68,10 @@ public class ImageController {
 
 
         return "redirect:/userHomePage/" + username; 
+    }
+    
+    @GetMapping("/profilepicture")
+    public String changeProfilePicture(){
+        return "profilepicture";
     }
 }

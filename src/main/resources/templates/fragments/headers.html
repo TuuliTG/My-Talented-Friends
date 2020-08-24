@@ -22,6 +22,40 @@ and open the template in the editor.
             <a href="/perform_logout">Log out</a>
             
         </header>
+        
+        <nav th:fragment="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark">
+          <a class="navbar-brand" th:href="@{/frontpage}">MTF</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div  class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/userHomePage}">My Homepage</a>
+              </li>
+              <li sec:authorize="isAnonymous()" class="nav-item">
+                <a class="nav-link" th:href="@{/login}">login</a>
+              </li>
+              <li sec:authorize="isAnonymous()" class="nav-item">
+                <a class="nav-link" th:href="@{/signup}">sign up</a>
+              </li>
+              <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/users}">Users</a>
+              </li>  
+              <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/messageboard}">Message Board</a>
+              </li>
+              <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" href="/perform_logout">log out</a>
+              </li>
+            </ul>
+          </div>  
+        </nav>
+        
+        <div th:fragment="titlesection" class="jumbotron text-center" style="margin-bottom:0">
+            <h1 th:text="${title}">Title</h1>
+            <!--<p>Here you'll find an employee or an employer!</p> -->
+        </div>
         <div>TODO write content</div>
     </body>
 </html>

@@ -10,7 +10,8 @@ and open the template in the editor.
         
     </head>
     <body>
-        <div th:replace="fragments/headers :: header"></div>
+        <div th:replace="fragments/headers :: navbar"></div>
+        <div th:replace="fragments/headers :: titlesection(title='MessageBoard')"></div>
         <h1>MESSAGE BOARD</h1>
         
         <form method="POST" th:action="@{/messageboard/post}">

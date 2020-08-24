@@ -5,21 +5,18 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/headers :: head(title='Front Page')">
-        <title>Front Page</title>
+    <head th:replace="fragments/headers :: head(title='profile picture')">
+        <title>title</title>
         
     </head>
     <body>
         <div th:replace="fragments/headers :: navbar"></div>
         <div th:replace="fragments/headers :: titlesection(title='MyTalentedFriends')"></div>
-        <br/>
-        
-        
-        <div th:if="${loggedIn}">
-            You are logged in as <span th:text="${currentUser}"></span>
-           
-        </div>
-        
-	
+    
+        <strong>ADD A PROFILE PICTURE</strong>
+        <form th:action="@{/image}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="accept" />
+        </form>
     </body>
 </html>

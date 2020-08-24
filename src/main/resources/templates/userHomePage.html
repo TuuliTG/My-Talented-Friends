@@ -10,99 +10,67 @@ and open the template in the editor.
     </head>
     
     <body>
-        <div class="container">
-             <div th:replace="fragments/headers :: header"></div>
-        </div>
-       
         
+        <div th:replace="fragments/headers :: navbar"></div>
+       <div th:replace="fragments/headers :: titlesection(title=${user.firstName + ' ' + user.lastName})"></div>
+
         <div class="container">
-            <div th:if="${isAVisitor}">
-                <div class="row">
-                    <div class="col-8">
-                        <h1 th:text="${user.firstName + ' ' + user.lastName}">Home Page title</h1>
+            
+            <div class="row">
+                <div class="col-sm-8">
+                    
+                    <a class="text-center" th:if="${user.description == null}" th:href="@{/description}">Click to add a description</a>
+                    <div class="text-center" th:unless="${user.description == null}">
+                        <p th:text="${user.description}"></p>
                     </div>
-                    <div class="col-4">
-                        <img th:src="@{/image/{username}(username=${user.username})}" 
-                             class="img-fluid" alt="Responsive image"/>
-                    </div>
+                    <h3>Skills:</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Skill</th>
+                                <th>Praises</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="skill : ${skills}">
+                                <td th:text="${skill.skillDescription}"></td>
+                                <td th:text="${skill.likes}"></td>
+                                <td>
+                                    <div th:if="${isAVisitor}">
+                                        <form th:action="@{/{username}/praise/{skillid}(username=${user.username}, skillid=${skill.id})}" method="POST">
+                                        <input type="submit" value="praise"/>
+                                        </form>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a th:unless="${isAVisitor}" th:href="@{/addskills}">Add skills</a>
                 </div>
-            </div>
-        </div>
-        
-        <div th:unless="${isAVisitor}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-3 cell">
-                       
-                        Pending friend requests:
+                <div class="col-sm-4">
+                    <img th:src="@{/image/{username}(username=${user.username})}" 
+                         class="img-fluid"/>
+                    <div th:unless="${isAVisitor}">
+                        <a th:href="@{/profilepicture}">change your profile picture</a>
                         <br/>
+                        <h5 th:unless="${user.comingRequests.isEmpty()}">Friend requests:</h5>
                         <ul>
-                            <li th:each="request : ${user.sentRequests}">
-                                <span th:text="${request.requestTo.username}"></span>
+                            <li th:each="request : ${user.comingRequests}">
+                                <a th:href="@{/userHomePage/{username}(username=${request.requestFrom.username})}" th:text="${request.requestFrom.username}">request from</a>
+                                <form th:action="@{/accept/{username}(username=${request.requestFrom.username})}" method="POST">
+                                    <input type="submit" value="accept"/>
+                                </form>
+                                <form th:action="@{/reject/{username}(username=${request.requestFrom.username})}" method="POST">
+                                    <input type="submit" value="reject"/>
+                                </form>
                             </li>
                         </ul>
-                        <br/>
-                        <div>
-                            <strong>Friend requests:</strong>
-                            <br/>
-                            <ul>
-                                <li th:each="request : ${user.comingRequests}">
-                                    <a th:href="@{/userHomePage/{username}(username=${request.requestFrom.username})}" th:text="${request.requestFrom.username}">request from</a>
-                                    <form th:action="@{/accept/{username}(username=${request.requestFrom.username})}" method="POST">
-                                        <input type="submit" value="accept"/>
-                                    </form>
-                                    <form th:action="@{/reject/{username}(username=${request.requestFrom.username})}" method="POST">
-                                        <input type="submit" value="reject"/>
-                                    </form>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <h1>Welcome <span th:text="${user.firstName + ' ' + user.lastName}">name</span></h1>
-                    </div>
-                    <div class="col-4">
-                        <img th:src="@{/image/{username}(username=${user.username})}" 
-                             class="img-fluid" alt="Responsive image"/>
-                        <br/>
-                        <strong>ADD A PROFILE PICTURE</strong>
-                        <form th:action="@{/userHomePage/{username}/files(username=${user.username})}" method="POST" enctype="multipart/form-data">
-                            <input type="file" name="file" />
-                            <input type="submit" value="accept" />
-                        </form>
+                        <a class="nav-link" th:href="@{/{username}/friends(username=${user.username})}">My friends</a>
                     </div>
                 </div>
-                
-                <a th:href="@{/{username}/friends(username=${user.username})}">My friends</a>
-
             </div>
-            <a th:href="@{/addskills}">Add skills</a>
-        </div> <!-- Only for own userpage ends here -->
-        <h3>Skills:</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Skill</th>
-                    <th>Praises</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="skill : ${skills}">
-                    <td th:text="${skill.skillDescription}"></td>
-                    <td th:text="${skill.likes}"></td>
-                    <td>
-                        <div th:if="${isAVisitor}">
-                            <form th:action="@{/{username}/praise/{skillid}(username=${user.username}, skillid=${skill.id})}" method="POST">
-                            <input type="submit" value="praise"/>
-                            </form>
-                        </div>
-                        
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
-       
+            
+        </div>
     </body>
 </html>
