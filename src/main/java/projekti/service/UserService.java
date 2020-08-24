@@ -11,8 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projekti.domain.FriendRequest;
+import projekti.domain.Skill;
 import projekti.domain.User;
 import projekti.repositories.FriendRequestRepository;
+import projekti.repositories.SkillRepository;
 import projekti.repositories.UserRepository;
 
 /**
@@ -31,6 +33,9 @@ public class UserService {
     @Autowired
     private FriendRequestRepository frp;
     
+    @Autowired
+    private SkillRepository skillRepository;
+    
     public List<User> listAll() {
         return userRepo.findAll();
     }
@@ -39,9 +44,9 @@ public class UserService {
         return userRepo.findByUsername(username);
     }
     
-    public Boolean createANewUser(String firstname, String lastname, String username,String password) {
-        if(userRepo.findByUsername(username)==null){
-            User u = new User(firstname, lastname, username,this.passwordEncoder.encode(password));
+    public Boolean createANewUser(User u) {
+        if(userRepo.findByUsername(u.getUsername())==null){
+            u.setPassword(passwordEncoder.encode(u.getPassword()));
             this.userRepo.save(u);
             return true;
         } else {
@@ -84,7 +89,7 @@ public class UserService {
         this.frp.deleteByRequestFromAndRequestTo(u.getId(), f.getId());
     }
     
-    private boolean areFriends(User u, User f) {
+    public boolean areFriends(User u, User f) {
         boolean areFriends = false;
         if(u.getFriends().contains(f)){
             areFriends=true;
@@ -96,6 +101,35 @@ public class UserService {
     
     public void save(User u) {
         this.userRepo.save(u);
+    }
+    
+    public List<User> findByKeyword(String keyword) {
+        return this.userRepo.findByKeyword(keyword);
+    }
+    
+    public void deleteFromFriends(String username, String friendUsername){
+        User u = this.userRepo.findByUsername(username);
+        User friend = this.userRepo.findByUsername(friendUsername);
+        List<User> friends = u.getFriends();
+        List<User> friendOf = u.getFriendOf();
+        friends.remove(friend);
+        friendOf.remove(friend);
+        u.setFriends(friends);
+        u.setFriendOf(friendOf);
+        this.userRepo.save(u);
+    }
+    
+    public List<Long> sentFriendRequestsTo(Long usernameFrom) {
+        return this.frp.findSentRequests(usernameFrom);
+    }
+    
+    public void addASkill(String skillDescription, String username){
+        if(skillDescription.length() < 25 && !skillDescription.isEmpty()) {
+            User u = this.userRepo.findByUsername(username);
+            Skill skill = new Skill(skillDescription, u);
+            this.skillRepository.save(skill);
+        }
+        
     }
     
     

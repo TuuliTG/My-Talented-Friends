@@ -9,6 +9,7 @@ and open the template in the editor.
         <title th:text="${title}">title</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" th:href="@{/public/style.css}"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     </head>
@@ -17,7 +18,9 @@ and open the template in the editor.
             <a th:href="@{/frontpage}">Front Page</a> |
             <a th:href="@{/userHomePage}">Homepage</a> |
             <a th:href="@{/messageboard}">Message Board</a> |
+            <a th:href="@{/users}">users</a> |
             <a href="/perform_logout">Log out</a>
+            
         </header>
         <div>TODO write content</div>
     </body>

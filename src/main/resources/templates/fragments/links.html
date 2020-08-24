@@ -5,10 +5,8 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="fragments/headers :: head(title='Links')">
         <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         
@@ -33,6 +31,14 @@ and open the template in the editor.
                 <button type="submit">MESSAGE BOARD</button>
             </form>
         </div>
+        
+        <div th:fragment="searchbar">
+            <form method="GET" th:action="@{/users}">
+                <input type="text" name="keyword"/>
+                <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
+            </form>
+        </div>
+        
         
     </body>
     

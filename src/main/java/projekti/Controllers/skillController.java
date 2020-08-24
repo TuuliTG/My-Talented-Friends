@@ -5,66 +5,57 @@
  */
 package projekti.Controllers;
 
-/**
- *
- * @author tgtuuli
- */
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import projekti.domain.Skill;
 import projekti.domain.User;
+import projekti.repositories.SkillRepository;
 import projekti.repositories.UserRepository;
 import projekti.service.UserService;
 
+/**
+ *
+ * @author tgtuuli
+ */
 @Controller
-public class signUpController {
-    
-    
-    
+public class skillController {
     @Autowired
     private UserService userService;
+    
     @Autowired
-    private UserRepository userRepository;
+    private SkillRepository skillRepository;
     
     
-    @PostMapping("/signup")
-    public String createANewUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            return "signup";
-        }
-        Boolean userCreated = this.userService.createANewUser(user);
-        if(userCreated == true){
-            return "redirect:/frontpage";
-        }
-        else {
-            return "usernameNotAvailable";
-        }
+    @GetMapping("addskills")
+    public String skillForm(){
+        return "addskills";
+    }
+    @PostMapping("skills")
+    public String addASkill(@RequestParam String skill){
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        this.userService.addASkill(skill, username);
+        return "redirect:/addskills";
         
     }
     
-    
-    
-    @GetMapping("/signup")
-    public String signUp(@ModelAttribute User user){
-        return "signup";
+    @PostMapping("/{username}/praise/{skillid}")
+    public String praise(@PathVariable String skillid, @PathVariable String username){
+        
+        Long skillId = Long.parseLong(skillid);
+        Skill skill = this.skillRepository.getOne(skillId);
+        skill.setLikes(skill.getLikes()+1);
+        return "redirect:/userHomePage/" + username;
     }
-    
-    
 }

@@ -1,0 +1,23 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/headers :: head(title='skills')">
+        <title>title</title>
+    </head>
+    <body>
+        <div class="container">
+             <div th:replace="fragments/headers :: header"></div>
+        </div>
+        
+        <form method="POST" th:action="@{/skills}">
+            <table class="table">
+                <tr>
+                    <td>Skill</td>
+                    <td><input type="text" name="skill"/></td>
+                    <td>
+                        <input type="submit" value="Add a skill!"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

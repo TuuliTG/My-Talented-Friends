@@ -1,0 +1,49 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/headers :: head(title='friends')">
+        <title>title</title>
+        
+    </head>
+    <body>
+        <div class="container">
+             <div th:replace="fragments/headers :: header"></div>
+        </div>
+        <div th:replace="fragments/links :: searchbar"></div>
+        
+        <table class="table table-hover" >
+            <thead>
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Username</th>
+                </tr>
+            </thead>
+            <tbody th:each="user : ${friends}">
+                <tr>
+                    <td> <img th:src="@{/image/{username}(username=${user.username})}" 
+                              class="img-fluid" width="40" height="40"/>
+                    </td>
+                    <td><a th:href="@{/userHomePage/{username}(username=${user.username})}" th:text="${user.firstName}"/></td>
+                    <td><a th:href="@{/userHomePage/{username}(username=${user.username})}" th:text="${user.lastName}"/></td>
+                    <td><a th:href="@{/userHomePage/{username}(username=${user.username})}" th:text="${user.username}"/></td>
+                    <td><div th:if="${#lists.contains(friends, user)}">
+                            <form th:action="@{delete/{username}(username=${user.username})}" th:method="POST">
+                                <input type="submit" value="delete from friends"/>
+                            </form>
+                        </div>
+                        <div th:if="${#lists.contains(sentrequests,user.id)}">
+                            Request sent
+                        </div>
+                        <div th:if="${!#lists.contains(friends, user) and !#lists.contains(sentrequests,user.id)}">
+                            <form th:action="@{friendrequest/{username}(username=${user.username})}" th:method="POST">
+                                <input type="submit" value="send a friend request"/>
+                            </form>
+                        </div>
+                        
+                    </td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </body>
+</html>

@@ -29,21 +29,11 @@ and open the template in the editor.
             </div>
         </div>
         
-        
-        
-        
         <div th:unless="${isAVisitor}">
             <div class="container">
                 <div class="row">
                     <div class="col-3 cell">
-                        <strong>Who do you want to be friends with?</strong>
-                        <form th:action="@{/userHomePage/{username}/sendAFriendRequest(username=${user.username})}" method="POST">
-                            <select name="friendUsername">
-                                <option th:each="friend : ${allUsers}" th:value="${friend.username}" th:text="${friend.username}"></option>
-
-                            </select>
-                            <input type="submit" value="submit" />
-                        </form>
+                       
                         Pending friend requests:
                         <br/>
                         <ul>
@@ -83,28 +73,35 @@ and open the template in the editor.
                         </form>
                     </div>
                 </div>
-
                 
-
-                <div th:if="${friends != null}">
-                    <h3>My friends</h3>
-                    <ul>
-                        <li th:each="friend : ${friends}" >
-                            <a th:href="@{/userHomePage/{friend}(friend =${friend.username})}"><span th:text="${friend.username}">friend name</span> </a>
-
-
-                        </li>
-                    </ul>
-                </div>
-                <div th:unless="${friends != null}">
-                    <h3>NO FRIENDS YET</h3>
-                </div>
-
-
-                
+                <a th:href="@{/{username}/friends(username=${user.username})}">My friends</a>
 
             </div>
+            <a th:href="@{/addskills}">Add skills</a>
         </div> <!-- Only for own userpage ends here -->
+        <h3>Skills:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Skill</th>
+                    <th>Praises</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="skill : ${skills}">
+                    <td th:text="${skill.skillDescription}"></td>
+                    <td th:text="${skill.likes}"></td>
+                    <td>
+                        <div th:if="${isAVisitor}">
+                            <form th:action="@{/{username}/praise/{skillid}(username=${user.username}, skillid=${skill.id})}" method="POST">
+                            <input type="submit" value="praise"/>
+                            </form>
+                        </div>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         
        
     </body>

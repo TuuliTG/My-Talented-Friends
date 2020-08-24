@@ -15,25 +15,13 @@ and open the template in the editor.
         <br/>
         <a th:href="@{/signup}">Sign up</a>
         
-        <div>Users:</div>
-        <ul>
-            <li th:each="user : ${users}">
-                <span th:text="${user.firstName}">first name</span>
-                <span th:text="${user.lastName}"></span>
-                <span th:text="${user.username}"></span>
-            </li>
-        </ul>
-        
         <div th:unless="${loggedIn}">
             <a href="/login"> Click here to log in</a>
         </div>
         
         <div th:if="${loggedIn}">
             You are logged in as <span th:text="${currentUser}"></span>
-            <br/>
-            <a th:href="@{/userHomePage}">Go to your homepage</a>
-            <br/>
-            <a th:href="@{/perform_logout}">log out</a>
+           
         </div>
         
         

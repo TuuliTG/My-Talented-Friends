@@ -21,6 +21,7 @@ import projekti.service.UserService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import projekti.domain.Message;
+import projekti.domain.Skill;
 import projekti.service.MessageService;
 
 /**
@@ -54,10 +55,12 @@ public class HomePageController {
             isAVisitor = true;
             
         }
+        
         model.addAttribute("isAVisitor",isAVisitor);
         //System.out.println("username " + username);
         User u = this.userService.findByUsername(username);
         //System.out.println("user:" + u);
+        List<Skill> skills = u.getSkills();
         List<User> allUsers = this.userService.listAll();
         allUsers.remove(u);
         model.addAttribute("user", u);
@@ -68,7 +71,7 @@ public class HomePageController {
         //}
         //System.out.println("friends = " + friends);
         model.addAttribute("friends", friends);
-        
+        model.addAttribute("skills", skills);
         return "userHomePage";
     }
     
