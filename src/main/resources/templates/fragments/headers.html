@@ -46,7 +46,9 @@ and open the template in the editor.
                 <a class="nav-link" th:href="@{/messageboard}">Message Board</a>
               </li>
               <li sec:authorize="isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/perform_logout">log out</a>
+                  <form method="POST" th:action="@{/perform_logout}">
+                      <input type="submit" class="btn btn-link" value="log out"/>
+                  </form>
               </li>
             </ul>
           </div>  
