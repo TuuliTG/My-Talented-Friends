@@ -48,10 +48,11 @@ public class ImageController {
     public String saveImage(@RequestParam("file") MultipartFile file) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        if(file.getSize()>100000){
+        /*if(file.getSize()>5000000){
             System.out.println("file is too large");
             return "redirect:/filetoolarge";
         }
+*/
         User u = userService.findByUsername(username);
         
         FileObject fo = new FileObject();
