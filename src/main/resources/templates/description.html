@@ -4,12 +4,13 @@
     </head>
     <body>
         <div th:replace="fragments/headers :: navbar"></div>
-        <div th:replace="fragments/headers :: titlesection(title='MyTalentedFriends')"></div>
         
         <div class="container">
             <h5 class="text-center">Tell something about yourself:</h5>
-            <form class="form-group" method="POST" th:action="@{/description}">
-            <textarea id="description" name="description" rows="5"></textarea>
+            <form method="POST" th:action="@{/description}">
+                <div class="form-group">
+                    <textarea id="description" class="form-control" name="description" rows="5"></textarea>
+                </div>
             <input type="submit" value="Add a description!"/>
         </form>
         </div>

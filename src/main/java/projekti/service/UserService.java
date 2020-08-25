@@ -124,7 +124,7 @@ public class UserService {
     }
     
     public void addASkill(String skillDescription, String username){
-        if(skillDescription.length() < 25 && !skillDescription.isEmpty()) {
+        if(skillDescription.length() < 50 && !skillDescription.isEmpty()) {
             User u = this.userRepo.findByUsername(username);
             Skill skill = new Skill(skillDescription, u);
             this.skillRepository.save(skill);

@@ -11,7 +11,35 @@ and open the template in the editor.
     </head>
     <body>
         <div th:replace="fragments/headers :: navbar"></div>
-        <form method="POST" th:action="@{/signup}" th:object="${user}">
+        <div class="d-flex justify-content-center mt-5">
+            <h2>SIGN UP</h2>
+            <br/>
+            <form method="POST" th:action="@{/signup}" th:object="${user}">
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" name="firstName" id="firstname" th:field="*{firstName}"/>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="lastName" id="lastname" th:field="*{lastName}"/>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="username">Choose a username</label>
+                    <input type="text" name="username" id="username" th:field="*{username}"/>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" th:field="*{password}"/>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+                <input type="submit" value="Confirm" class="btn btn-primary"/>
+            </form>
+        </div>
+            
+                   <!--
             <table class="table">
                 <tr>
                     <td>First Name</td>
@@ -39,6 +67,7 @@ and open the template in the editor.
             </table>
            
         </form>
+                   -->
        
     </body>
 </html>
