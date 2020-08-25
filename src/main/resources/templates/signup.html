@@ -10,8 +10,7 @@ and open the template in the editor.
         
     </head>
     <body>
-        <<div th:replace="fragments/headers :: navbar"></div>
-        <div th:replace="fragments/headers :: titlesection(title='MyTalentedFriends')"></div>
+        <div th:replace="fragments/headers :: navbar"></div>
         <form method="POST" th:action="@{/signup}" th:object="${user}">
             <table class="table">
                 <tr>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,21 +39,20 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.authorizeRequests()
                 .antMatchers("/frontpage").permitAll()
                 .antMatchers("/signup").permitAll()
+                .antMatchers(HttpMethod.GET, "/public/**").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
                 .permitAll().loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/userHomePage", true)
-                .failureUrl("/login?error=true");
-        
-        
-                http.logout()
-                .logoutUrl("/perform_logout").permitAll()
+                .failureUrl("/login?error=true")
+                .and()
+                .logout()
+                .logoutUrl("/perform_logout")
                 .logoutSuccessUrl("/frontpage")
+                .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true) 
-                ;
+                .clearAuthentication(true);
                 
     }
 
