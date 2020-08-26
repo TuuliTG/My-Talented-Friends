@@ -19,7 +19,7 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-sm-8">
                     
-                    <a class="text-center" th:if="${user.description == null}" th:href="@{/description}">Click to add a description</a>
+                    <a class="text-center" th:if="${user.description == null and !isAVisitor}" th:href="@{/description}">Click to add a description</a>
                     <div class="text-center" th:unless="${user.description == null}">
                         <p th:text="${user.description}"></p>
                     </div>
