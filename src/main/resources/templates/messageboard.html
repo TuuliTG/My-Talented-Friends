@@ -14,20 +14,96 @@ and open the template in the editor.
         <div th:replace="fragments/headers :: titlesection(title='MessageBoard')"></div>
         <div class="container mt-5">
             
-            <form method="POST" th:action="@{/messageboard/post}">
+            <form class="md-5" method="POST" th:action="@{/messageboard/post}">
                 <div class="form-group">
                     <textarea name="content" rows="5" placeholder="write your message here"></textarea>
                 </div>
                 <input class="btn btn-secondary" type="submit" value="Add!"/>
             </form>
+            
+            <table class="table table-borderless">
+                <tbody th:each="message : ${messages}">
+                    <tr class="table-info">
+                        <td><img th:src="@{/image/{username}(username=${message.writer.username})}" 
+                              class="img-fluid" width="40" height="40"/></td>
+                        <td><h5><span th:text="${message.writer.username}"></span> wrote: </h5></td>
+                        <td class="text-muted"><span  th:text="${#temporals.format(message.writtenAt, 'dd-MMMM-yy', new java.util.Locale('en', 'EN'))}"></span> at
+                            <span class="text-muted" th:text="${#temporals.format(message.writtenAt, 'HH-mm')}"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <p th:text="${message.content}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <form th:action="@{/messageboard/like/{messageid}(messageid=${message.id})}" th:method="POST">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                <span class="fa fa-thumbs-up"></span>
+                                </button>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Likes: <span th:text="${message.likes}"></span></td>
+                    </tr>
+   
+                    <tr>
+                        <td></td>
+                        <td>
+                            <form method="POST" th:action="@{/messageboard/comment/{messageid}(messageid=${message.id})}">
+                                <textarea name="content" rows="3" placeholder="Comment"></textarea>
+
+                                <input type="submit" class="btn btn-secondary" value="send"/>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <ul class="list-group">
+                                <li class="list-group-item" th:each="comment : ${message.comments}">
+                                    <div class="text-muted">
+                                        <span  th:text="${#temporals.format(comment.writtenAt, 'dd-MMMM-yy', new java.util.Locale('en', 'EN'))}"></span>
+                                     at <span th:text="${#temporals.format(message.writtenAt, 'HH-mm')}"></span>
+                                    </div>
+                                    <h6><span th:text="${comment.writer.username}"></span> commented:</h6>
+                                    <br/>
+                                    <span th:text="${comment.content}"></span>
+                                    <br/>
+                                    <br/>
+                                    <form th:action="@{/messageboard/likecomment/{commentid}(commentid=${comment.id})}" th:method="POST">
+                                        <button type="submit" class="btn btn-outline-secondary">
+                                            <span class="fa fa-thumbs-up"></span>
+                                        </button>
+                                    </form>
+                                    <br/>
+                                    <p>
+                                        Likes: <span th:text="${comment.likes}"></span>
+                                    </p>
+                                </li>
+                            </ul>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            
         
             <ul>
                 <li th:each="message : ${messages}">
-                    <span th:text="${#temporals.format(message.writtenAt, 'dd-mm-yy HH:mm')}"></span>
+                    <span class="text-muted" th:text="${#temporals.format(message.writtenAt, 'dd-MMMM-yy', new java.util.Locale('en', 'EN'))}"></span> at
+                    <span th:text="${#temporals.format(message.writtenAt, 'HH-mm')}"></span>
                     <br/>
-                    <span th:text="${message.writer.username}"></span>:
+                    
+                    <h5>FROM <span th:text="${message.writer.username}"></span></h5>
                     <br/>
-                    <span th:text="${message.content}"></span>
+                    <span class="bg-secondary text-white" th:text="${message.content}"></span>
                     <br/>
                     Likes: <span th:text="${message.likes}"></span>
                     <br/>

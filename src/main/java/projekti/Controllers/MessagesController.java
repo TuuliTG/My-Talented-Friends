@@ -70,8 +70,7 @@ public class MessagesController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         
-        
-        model.addAttribute("messages", this.messageService.listAllOwnedByFriendsAndUser(username));
+        model.addAttribute("messages", this.messageService.listAllOwnedByFriendsAndUser(username, 0, 25));
         return "messageboard";
     }
     @PostMapping("/messageboard/like/{messageid}")

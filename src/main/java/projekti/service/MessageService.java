@@ -66,8 +66,8 @@ public class MessageService {
         return this.messageRepository.findByOwnerId(u.getId(), pageable);
     }   
     */
-    public List<Message> listAllOwnedByFriendsAndUser(String username) {
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("writtenAt").descending());
+    public List<Message> listAllOwnedByFriendsAndUser(String username, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("writtenAt").descending());
         
         User u = this.userRepository.findByUsername(username);
         List<Long> ids = new ArrayList<>();
