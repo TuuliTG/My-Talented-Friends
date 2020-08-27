@@ -52,7 +52,8 @@ and open the template in the editor.
                     <img th:src="@{/image/{username}(username=${user.username})}" 
                          class="img-fluid"/>
                     <div th:unless="${isAVisitor}">
-                        <a th:href="@{/profilepicture}">change your profile picture</a>
+                        <a th:href="@{/profilepicture}">Change your profile picture</a>
+                        <a th:href="@{/description}">Change your description</a>
                         <br/>
                         <h5 th:unless="${user.comingRequests.isEmpty()}">Friend requests:</h5>
                         <ul>
