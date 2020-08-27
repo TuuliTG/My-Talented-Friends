@@ -93,50 +93,6 @@ and open the template in the editor.
                 </tbody>
             </table>
             
-            
-        
-            <ul>
-                <li th:each="message : ${messages}">
-                    <span class="text-muted" th:text="${#temporals.format(message.writtenAt, 'dd-MMMM-yy', new java.util.Locale('en', 'EN'))}"></span> at
-                    <span th:text="${#temporals.format(message.writtenAt, 'HH-mm')}"></span>
-                    <br/>
-                    
-                    <h5>FROM <span th:text="${message.writer.username}"></span></h5>
-                    <br/>
-                    <span class="bg-secondary text-white" th:text="${message.content}"></span>
-                    <br/>
-                    Likes: <span th:text="${message.likes}"></span>
-                    <br/>
-                    <form th:action="@{/messageboard/like/{messageid}(messageid=${message.id})}" th:method="POST">
-                        <button type="submit" class="btn btn-outline-secondary">
-                            <span class="fa fa-thumbs-up"></span>
-                        </button>
-                    </form>
-                    <ul>
-                        <li th:each="comment : ${message.comments}">
-                            <span th:text="${#temporals.format(comment.writtenAt, 'dd-mm-yy HH:mm')}"></span>
-                            <br/>
-                            <span th:text="${comment.writer.username}"></span>:
-                            <br/>
-                            <span th:text="${comment.content}"></span>
-                            <br/>
-                            Likes: <span th:text="${comment.likes}"></span>
-                            <br/>
-                            <form th:action="@{/messageboard/likecomment/{commentid}(commentid=${comment.id})}" th:method="POST">
-                                <button type="submit" class="btn btn-outline-secondary">
-                                    <span class="fa fa-thumbs-up"></span>
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                    <form method="POST" th:action="@{/messageboard/comment/{messageid}(messageid=${message.id})}">
-                        <textarea name="content" rows="5" placeholder="Comment"></textarea>
-
-                        <input type="submit" value="send"/>
-                        </form>
-
-                </li>
-            </ul>
         </div>
         
     </body>
