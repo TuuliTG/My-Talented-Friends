@@ -7,6 +7,10 @@ package projekti.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,6 +142,11 @@ public class UserService {
             u.setDescription(description);
             this.userRepo.save(u);
         }
+    }
+    
+    public List<Skill> getSkillsSortedByPraises(User u){
+        Pageable pageable = PageRequest.of(0, 25, Sort.by("likes").descending());
+        return skillRepository.FindByOwnerId(u.getId(), pageable);
     }
     
     

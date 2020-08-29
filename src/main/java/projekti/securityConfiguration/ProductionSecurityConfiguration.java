@@ -39,7 +39,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.authorizeRequests()
                 .antMatchers("/frontpage").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers(HttpMethod.GET, "/public/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/static/css/**").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
                 .permitAll().loginPage("/login")

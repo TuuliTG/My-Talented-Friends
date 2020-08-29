@@ -5,9 +5,11 @@
  */
 package projekti.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -60,7 +62,8 @@ public class HomePageController {
         //System.out.println("username " + username);
         User u = this.userService.findByUsername(username);
         //System.out.println("user:" + u);
-        List<Skill> skills = u.getSkills();
+        List<Skill> skills = this.userService.getSkillsSortedByPraises(u);
+        
         List<User> allUsers = this.userService.listAll();
         allUsers.remove(u);
         model.addAttribute("user", u);

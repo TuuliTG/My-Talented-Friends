@@ -13,5 +13,16 @@ and open the template in the editor.
     background-color: #ae91b2;
 }
 
+tr:nth-child(1):hover {
+    background-color: #292C31;
+}
+
+tr:nth-child(2):hover {
+    background-color: #292C31;
+}
+tr:nth-child(3):hover {
+    background-color: #292C31;
+}
+
 
 
