@@ -14,12 +14,18 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import projekti.repositories.CommentRepository;
 
 
 @Entity
@@ -27,7 +33,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message extends AbstractPersistable<Long> {
-
+    
     @ManyToOne   
     private User writer;
     
@@ -50,7 +56,5 @@ public class Message extends AbstractPersistable<Long> {
         this.likes = 0;
         this.writtenAt = writtenAt;
     }
-
     
-
 }
