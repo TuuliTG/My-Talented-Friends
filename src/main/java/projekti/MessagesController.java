@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.Controllers;
+package projekti;
 
 import static java.lang.Long.parseLong;
 import java.time.LocalDate;
@@ -22,11 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import projekti.domain.Message;
-import projekti.domain.User;
-import projekti.repositories.MessageRepository;
-import projekti.repositories.UserRepository;
-import projekti.service.MessageService;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.Controllers;
+package projekti;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import projekti.domain.FileObject;
-import projekti.domain.User;
-import projekti.repositories.FileObjectRepository;
-import projekti.service.UserService;
 
 /**
  *

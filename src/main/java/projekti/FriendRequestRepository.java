@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.repositories;
+package projekti;
 
 /**
  *
@@ -14,8 +14,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import projekti.domain.FriendRequest;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long>{
     @Modifying
     @Query("delete from FriendRequest fr where fr.requestFrom.id =:requestFrom AND fr.requestTo.id=:requestTo")

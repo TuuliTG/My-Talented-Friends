@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.repositories;
+package projekti;
 
 /**
  *
@@ -11,7 +11,7 @@ package projekti.repositories;
  */
 
 import java.util.List;
-import projekti.domain.User;
+import projekti.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.Controllers;
+package projekti;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import projekti.domain.User;
-import projekti.service.UserService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import projekti.domain.Message;
-import projekti.domain.Skill;
-import projekti.service.MessageService;
 
 /**
  *

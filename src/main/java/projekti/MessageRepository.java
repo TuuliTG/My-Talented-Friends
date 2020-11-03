@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.repositories;
+package projekti;
 
 /**
  *
@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import projekti.domain.Message;
+import projekti.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Long>{
     @Query(value="SELECT m FROM Message m WHERE writer.id IN :writers")

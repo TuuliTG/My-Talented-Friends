@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.Controllers;
+package projekti;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
@@ -17,11 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import projekti.domain.Skill;
-import projekti.domain.User;
-import projekti.repositories.SkillRepository;
-import projekti.repositories.UserRepository;
-import projekti.service.UserService;
 
 /**
  *

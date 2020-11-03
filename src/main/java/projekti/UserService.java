@@ -3,23 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.service;
+package projekti;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projekti.domain.FriendRequest;
-import projekti.domain.Skill;
-import projekti.domain.User;
-import projekti.repositories.FriendRequestRepository;
-import projekti.repositories.SkillRepository;
-import projekti.repositories.UserRepository;
+
 
 /**
  *

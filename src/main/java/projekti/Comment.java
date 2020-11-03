@@ -1,60 +1,43 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.domain;
+package projekti;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import projekti.repositories.CommentRepository;
 
-
+/**
+ *
+ * @author tgtuuli
+ */
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message extends AbstractPersistable<Long> {
-    
+public class Comment extends AbstractPersistable<Long>{
     @ManyToOne   
     private User writer;
     
     private String content;
     
     private long likes;
+    
     @ManyToMany
     private List<User> usersWhoLiked;
     
     @Column(name="timestamp") //this is for h2 -> change for postgresql???
     private LocalDateTime writtenAt;
     
-    
-    @OneToMany(mappedBy = "message")
-    List<Comment> comments;
-
-    public Message(User writer, String content, LocalDateTime writtenAt) {
-        this.writer = writer;
-        this.content = content;
-        this.likes = 0;
-        this.writtenAt = writtenAt;
-    }
-    
+    @ManyToOne
+    private Message message;
 }

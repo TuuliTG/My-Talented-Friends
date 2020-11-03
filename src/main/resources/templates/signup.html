@@ -12,7 +12,10 @@ and open the template in the editor.
     <body>
         <div th:replace="fragments/headers :: navbar"></div>
         <div class="d-flex justify-content-center mt-5">
-            <h2>SIGN UP</h2>
+            <div class="container">
+                <h2>SIGN UP</h2>
+            </div>
+            
             <br/>
             <form method="POST" th:action="@{/signup}" th:object="${user}">
                 <div class="form-group">

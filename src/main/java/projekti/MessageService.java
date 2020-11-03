@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.service;
+package projekti;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,12 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projekti.domain.Comment;
-import projekti.domain.Message;
-import projekti.domain.User;
-import projekti.repositories.CommentRepository;
-import projekti.repositories.MessageRepository;
-import projekti.repositories.UserRepository;
+
 
 /**
  *
@@ -114,10 +109,10 @@ public class MessageService {
             this.commentRepository.save(comment);
             m.getComments().add(comment);
             this.messageRepository.save(m);
-            
-            
+             
         }
     }
+    
     public void likeComment(Long commentId, String user) {
         Comment c = this.commentRepository.getOne(commentId);
         User u = this.userRepository.findByUsername(user);
@@ -138,8 +133,4 @@ public class MessageService {
         }
         commentRepository.save(c);
     }
-    
-    
-    
-    
 }

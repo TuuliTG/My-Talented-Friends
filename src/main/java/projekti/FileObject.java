@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projekti.domain;
+package projekti;
 
 /**
  *
  * @author tgtuuli
  */
-import projekti.domain.User;
+import projekti.User;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
