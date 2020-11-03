@@ -48,7 +48,7 @@
                     <a th:unless="${isAVisitor}" th:href="@{/addskills}">Add skills</a>
                 </div>
                 <div class="col-sm-4">
-                    <img th:src="@{/image/{username}(username=${user.username})}" 
+                    <img th:unless="${user.profilePicture == null}"th:src="@{/image/{username}(username=${user.username})}" 
                          class="img-fluid"/>
                     <div th:unless="${isAVisitor}">
                         <a class="nav-link" th:href="@{/profilepicture}">Change your profile picture</a>
