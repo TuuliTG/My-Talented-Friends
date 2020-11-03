@@ -1,6 +1,6 @@
 # MY TALENTED FRIENDS
 A web based networking program. Designed for the cource called Web-palvelinohjelmointi (Web server programming) in Java language.
-It is available in 
+The program is available in [HEROKU](https://limitless-reaches-10732.herokuapp.com/signup).
 
 ## Program specification
 

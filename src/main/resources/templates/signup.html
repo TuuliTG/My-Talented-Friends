@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/headers :: head(title='Sign Up')">
@@ -14,32 +12,33 @@ and open the template in the editor.
         <div class="d-flex justify-content-center mt-5">
             <div class="container">
                 <h2>SIGN UP</h2>
+                <form method="POST" th:action="@{/signup}" th:object="${user}">
+                    <div class="form-group">
+                        <label for="firstname">First Name</label>
+                        <input type="text" name="firstName" id="firstname" th:field="*{firstName}"/>
+                        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" name="lastName" id="lastname" th:field="*{lastName}"/>
+                        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Choose a username</label>
+                        <input type="text" name="username" id="username" th:field="*{username}"/>
+                        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" th:field="*{password}"/>
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                    </div>
+                    <input type="submit" value="Confirm" class="btn btn-primary"/>
+                </form>
             </div>
             
-            <br/>
-            <form method="POST" th:action="@{/signup}" th:object="${user}">
-                <div class="form-group">
-                    <label for="firstname">First Name</label>
-                    <input type="text" name="firstName" id="firstname" th:field="*{firstName}"/>
-                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-                </div>
-                <div class="form-group">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" name="lastName" id="lastname" th:field="*{lastName}"/>
-                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-                </div>
-                <div class="form-group">
-                    <label for="username">Choose a username</label>
-                    <input type="text" name="username" id="username" th:field="*{username}"/>
-                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" th:field="*{password}"/>
-                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                </div>
-                <input type="submit" value="Confirm" class="btn btn-primary"/>
-            </form>
+            
+
         </div>
             
                    <!--
