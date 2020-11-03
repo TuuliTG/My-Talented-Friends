@@ -15,6 +15,7 @@
                 <form method="POST" th:action="@{/signup}" th:object="${user}">
                     <div class="form-group">
                         <label for="firstname">First Name</label>
+                        <br/>
                         <input type="text" name="firstName" id="firstname" th:field="*{firstName}"/>
                         <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                     </div>
