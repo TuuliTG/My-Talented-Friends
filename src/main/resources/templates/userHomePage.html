@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/headers :: head(title='User Wall')">
         <title>USER WALL </title>
@@ -18,8 +14,10 @@ and open the template in the editor.
             
             <div class="row">
                 <div class="col-sm-8">
-                    
-                    <a class="text-center" th:if="${user.description == null and !isAVisitor}" th:href="@{/description}">Click to add a description</a>
+                    <div th:if="${user.description == null and !isAVisitor}" class="container bg-info">
+                        <a th:href="@{/description}">Click to add a description</a>
+
+                    </div>
                     <div class="text-center" th:unless="${user.description == null}">
                         <p th:text="${user.description}"></p>
                     </div>
@@ -53,8 +51,9 @@ and open the template in the editor.
                     <img th:src="@{/image/{username}(username=${user.username})}" 
                          class="img-fluid"/>
                     <div th:unless="${isAVisitor}">
-                        <a th:href="@{/profilepicture}">Change your profile picture</a>
-                        <a th:href="@{/description}">Change your description</a>
+                        <a class="nav-link" th:href="@{/profilepicture}">Change your profile picture</a>
+                        <br/>
+                        <a class="nav-link" th:href="@{/description}">Change your description</a>
                         <br/>
                         <h5 th:unless="${user.comingRequests.isEmpty()}">Friend requests:</h5>
                         <ul>
