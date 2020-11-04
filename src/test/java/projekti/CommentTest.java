@@ -23,7 +23,9 @@ public class CommentTest {
         Comment c = new Comment();
         User u = new User("a", "a", "a", "abc");
         c.setWriter(u);
+        c.setContent("abcabc");
         assertNotNull(c);
         assertEquals(u, c.getWriter());
+        assertEquals("abcabc", c.getContent());
     }
 }
