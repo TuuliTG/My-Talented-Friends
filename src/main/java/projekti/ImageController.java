@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,14 +43,8 @@ public class ImageController {
     @Transactional
     @PostMapping("/image")
     public String saveImage(@RequestParam("file") MultipartFile file) throws IOException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        /*if(file.getSize()>5000000){
-            System.out.println("file is too large");
-            return "redirect:/filetoolarge";
-        }
-*/
-        User u = userService.findByUsername(username);
+       
+        User u = getAuthenticatedUser();
         
         FileObject fo = new FileObject();
 
@@ -64,11 +59,31 @@ public class ImageController {
         this.userService.save(u);
 
 
-        return "redirect:/userHomePage/" + username; 
+        return "redirect:/userHomePage/" + u.getUsername(); 
+    }
+    
+    @PostMapping("/deleteimage")
+    public String deleteImage() {
+        
+        User u = getAuthenticatedUser();
+        FileObject fo = u.getProfilePicture();
+        u.setProfilePicture(null);
+        fileObjectRepository.deleteById(fo.getId());
+        
+        return "redirect:/userHomePage/" + u.getUsername();
     }
     
     @GetMapping("/profilepicture")
-    public String changeProfilePicture(){
+    public String changeProfilePicture(Model model){
+        User u = getAuthenticatedUser();
+        model.addAttribute("user", u);
         return "profilepicture";
+    }
+    
+    private User getAuthenticatedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User u = userService.findByUsername(username);
+        return u;
     }
 }

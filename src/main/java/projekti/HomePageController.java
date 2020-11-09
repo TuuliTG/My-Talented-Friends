@@ -5,11 +5,8 @@
  */
 package projekti;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,9 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 /**
  *
@@ -35,19 +29,15 @@ public class HomePageController {
     
     @GetMapping("/userHomePage")
     public String homepage() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        return "redirect:/userHomePage/" + username;
+        User u = getAuthenticatedUser();
+        return "redirect:/userHomePage/" + u.getUsername();
     }
-    
-    
     
     @GetMapping("/userHomePage/{username}")
     public String getUserHomePage(@PathVariable String username, Model model){
         boolean isAVisitor = false;
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUsername = auth.getName();
+        User u = getAuthenticatedUser();
+        String loggedInUsername = u.getUsername();
         if(!loggedInUsername.equals(username)) {
             isAVisitor = true;
             
@@ -55,19 +45,16 @@ public class HomePageController {
         
         model.addAttribute("isAVisitor",isAVisitor);
         //System.out.println("username " + username);
-        User u = this.userService.findByUsername(username);
+        User homepageOwner = this.userService.findByUsername(username);
         //System.out.println("user:" + u);
-        List<Skill> skills = this.userService.getSkillsSortedByPraises(u);
+        List<Skill> skills = this.userService.getSkillsSortedByPraises(homepageOwner);
         
         List<User> allUsers = this.userService.listAll();
-        allUsers.remove(u);
-        model.addAttribute("user", u);
+        allUsers.remove(homepageOwner);
+        model.addAttribute("user", homepageOwner);
         model.addAttribute("allUsers", allUsers);
-        List<User> friends = u.getFriends();
-        //if(friends.isEmpty()){
-          //  friends = null;
-        //}
-        //System.out.println("friends = " + friends);
+        List<User> friends = homepageOwner.getFriends();
+        
         model.addAttribute("friends", friends);
         model.addAttribute("skills", skills);
         return "userHomePage";
@@ -78,6 +65,11 @@ public class HomePageController {
         return "redirect:/frontpage";
     }
     
-    
+    private User getAuthenticatedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User u = userService.findByUsername(username);
+        return u;
+    }
    
 }

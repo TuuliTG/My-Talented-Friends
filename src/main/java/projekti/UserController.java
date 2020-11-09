@@ -30,9 +30,8 @@ public class UserController {
     
     @GetMapping("/users")
     public String userpage(Model model, String keyword) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User user = this.userService.findByUsername(username);
+        
+        User user = getAuthenticatedUser();
         
         List<User> friends = user.getFriends();
         List<Long> sentRequests = this.userService.sentFriendRequestsTo(user.getId());
@@ -51,14 +50,30 @@ public class UserController {
     }
     @PostMapping("/description")
     public String addADescription(@RequestParam String description){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        this.userService.addADescription(description, username);
-        return "redirect:/userHomePage/" + username;
+        User u = getAuthenticatedUser();
+        this.userService.addADescription(description, u.getUsername());
+        return "redirect:/userHomePage/" + u.getUsername();
+    }
+    
+    @PostMapping("/deletedescription")
+    public String deleteDescription() {
+        User u = getAuthenticatedUser();
+        userService.deleteDescription(u);
+        return "redirect:/userHomePage/" + u.getUsername();
     }
     
     @GetMapping("/description")
-    public String description(){
+    public String description(Model model){
+        User u = getAuthenticatedUser();
+        model.addAttribute("user", u);
         return "description";
+    }
+   
+    
+    private User getAuthenticatedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User u = userService.findByUsername(username);
+        return u;
     }
 }

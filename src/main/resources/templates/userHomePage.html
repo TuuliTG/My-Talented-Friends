@@ -18,7 +18,7 @@
                         <a class="text-white" th:href="@{/description}">Click to add a description</a>
 
                     </div>
-                    <div class="container p-5"></div>
+                    <div class="container p-2"></div>
                     <div class="text-center" th:unless="${user.description == null}">
                         <p th:text="${user.description}"></p>
                     </div>
@@ -39,7 +39,12 @@
                                     <td>
                                         <div th:if="${isAVisitor}">
                                             <form th:action="@{/{username}/praise/{skillid}(username=${user.username}, skillid=${skill.id})}" method="POST">
-                                            <input type="submit" value="praise"/>
+                                                <input type="submit" value="praise"/>
+                                            </form>
+                                        </div>
+                                        <div th:unless="${isAVisitor}">
+                                            <form th:action="@{/deleteskill/{skillid}(skillid=${skill.id})}" method="POST">
+                                                <input type="submit" value="Delete"/>
                                             </form>
                                         </div>
 
@@ -57,21 +62,23 @@
                     <img th:unless="${user.profilePicture == null}"th:src="@{/image/{username}(username=${user.username})}" 
                          class="img-fluid p-3"/>
                     <div th:unless="${isAVisitor}">
-                        <a class="nav-link text-white" th:href="@{/profilepicture}">Change your profile picture</a>
+                        <a th:unless="${user.profilePicture == null}" class="nav-link text-white" th:href="@{/profilepicture}">Change your profile picture</a>
+                        
+                        <a th:if="${user.profilePicture == null}" class="nav-link text-white" th:href="@{/profilepicture}">Click here to add a profile picture!</a>
                         <br/>
                         <a class="nav-link text-white" th:href="@{/description}">Change your description</a>
                         <br/>
                         <a class="nav-link text-white" th:href="@{/{username}/friends(username=${user.username})}">My friends</a>
                         <br/>
-                        <h5 th:unless="${user.comingRequests.isEmpty()}">Friend requests:</h5>
+                        <h5 class="text-white" th:unless="${user.comingRequests.isEmpty()}">Friend requests:</h5>
                         <ul>
                             <li th:each="request : ${user.comingRequests}">
-                                <a th:href="@{/userHomePage/{username}(username=${request.requestFrom.username})}" th:text="${request.requestFrom.username}">request from</a>
+                                <a class="nav-link text-white" th:href="@{/userHomePage/{username}(username=${request.requestFrom.username})}" th:text="${request.requestFrom.username}">request from</a>
                                 <form th:action="@{/accept/{username}(username=${request.requestFrom.username})}" method="POST">
-                                    <input type="submit" value="accept"/>
+                                    <input class="btn-success" type="submit" value="accept"/>
                                 </form>
                                 <form th:action="@{/reject/{username}(username=${request.requestFrom.username})}" method="POST">
-                                    <input type="submit" value="reject"/>
+                                    <input class="btn-danger" type="submit" value="reject"/>
                                 </form>
                             </li>
                         </ul>

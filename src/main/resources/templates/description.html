@@ -11,8 +11,11 @@
                 <div class="form-group">
                     <textarea id="description" class="form-control" name="description" rows="5"></textarea>
                 </div>
-            <input type="submit" value="Add a description!"/>
-        </form>
+                <input type="submit" value="Add a description!"/>
+            </form>
+            <form th:unless="${user.description == null}" method="POST" th:action="@{/deletedescription}">
+                <input type="submit" value="Delete your description"/>
+            </form>
         </div>
         
     </body>

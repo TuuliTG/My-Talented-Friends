@@ -41,7 +41,7 @@ public class skillController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         this.userService.addASkill(skill, username);
-        return "redirect:/addskills";
+        return "redirect:/userHomePage/" + username;
         
     }
     
@@ -53,5 +53,20 @@ public class skillController {
         skill.setLikes(skill.getLikes()+1);
         this.skillRepository.save(skill);
         return "redirect:/userHomePage/" + username;
+    }
+    
+     
+    @PostMapping("/deleteskill/{skillid}")
+    public String deleteSkill(@PathVariable String skillid) {
+        User u = getAuthenticatedUser();
+        skillRepository.deleteById(Long.parseLong(skillid));
+        return "redirect:/userHomePage/" + u.getUsername();
+    }
+    
+    private User getAuthenticatedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User u = userService.findByUsername(username);
+        return u;
     }
 }

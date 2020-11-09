@@ -18,4 +18,5 @@ import projekti.Skill;
 public interface SkillRepository extends JpaRepository<Skill, Long> {
     @Query(value="SELECT s FROM Skill s WHERE owner.id = ?1")
     List<Skill> FindByOwnerId(Long id, Pageable pageable);
+    
 }

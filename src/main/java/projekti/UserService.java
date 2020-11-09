@@ -130,12 +130,18 @@ public class UserService {
         
     }
     
+    
     public void addADescription(String description, String username){
         if(description.length() <= 200 && !description.isEmpty()) {
             User u = this.userRepo.findByUsername(username);
             u.setDescription(description);
             this.userRepo.save(u);
         }
+    }
+    
+    public void deleteDescription(User u) {
+        u.setDescription(null);
+        this.userRepo.save(u);
     }
     
     public List<Skill> getSkillsSortedByPraises(User u){

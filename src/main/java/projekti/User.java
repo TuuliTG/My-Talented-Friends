@@ -34,7 +34,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class User extends AbstractPersistable<Long> {
     
     @NotEmpty
-    @Size(max = 10)
+    @Size(max = 15)
     public String firstName;
     @NotEmpty
     @Size(max = 25)

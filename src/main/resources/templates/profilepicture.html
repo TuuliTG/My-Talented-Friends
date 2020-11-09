@@ -12,11 +12,19 @@ and open the template in the editor.
     <body>
         <div th:replace="fragments/headers :: navbar"></div>
         <div th:replace="fragments/headers :: titlesection(title='MyTalentedFriends')"></div>
+        
+        <div class="container">
+            <form th:unless="${user.profilePicture == null}" th:action="@{/deleteimage}" method="POST">
+                <input type="submit" value="Click here to delete your profile picture"/>
+                
+            </form>
+            <strong>ADD A PROFILE PICTURE</strong>
+            <form th:action="@{/image}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <input type="submit" value="accept" />
+            </form>
+        </div>
     
-        <strong>ADD A PROFILE PICTURE</strong>
-        <form th:action="@{/image}" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <input type="submit" value="accept" />
-        </form>
+        
     </body>
 </html>
